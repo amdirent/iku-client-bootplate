@@ -31,6 +31,10 @@
     "core-animated-pages": "Polymer/core-animated-pages#~0.5.5",
     "paper-item": "Polymer/paper-item#~0.5.5",
     "paper-progress": "Polymer/paper-progress#~0.5.5",
-    "flatiron-director": "Polymer/flatiron-director#~0.5.0"
+    "flatiron-director": "Polymer/flatiron-director#~0.5.0",
+    "paper-icon-button": "Polymer/paper-icon-button#~0.5.5",
+    "core-field": "Polymer/core-field#~0.5.0",
+    "core-list": "Polymer/core-list#~0.5.5",
+    "polymer-filters": "addyosmani/polymer-filters#master"
   }
 }
