@@ -39,7 +39,7 @@
     <!--  <core-ajax id="ajax" url="{{selectedPage.page.url}}" handleAs="document" on-core-response="{{onResponse}}"></core-ajax> -->
       <core-scaffold>
         <nav>
-          <core-toolbar>MyWy?</core-toolbar>
+          <core-toolbar>[app_name]</core-toolbar>
           <core-menu valueattr="hash" selected="{{route}}" selectedModel="{{selectedPage}}" on-core-select="{{menuItemSelected}}"> <!-- on-click="{{ajaxLoad}}" -->
             <template repeat="{{page in pages}}">
               <paper-item hash="{{page.hash}}" noink>
