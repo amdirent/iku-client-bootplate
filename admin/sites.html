@@ -1,0 +1,120 @@
+<link rel="import" href="../scripts/bower_components/polymer/polymer.html">
+
+<link rel="import"href="../scripts/bower_components/core-focusable/core-focusable.html">
+<link rel="import"href="../scripts/bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import"href="../scripts/bower_components/core-field/core-field.html">
+<link rel="import"href="../scripts/bower_components/polymer-filters/polymer-filters.html">
+<link rel="import" href="../scripts/bower_components/core-list/core-list.html">
+
+<polymer-element name="sites-element">
+  <core-toolbar>
+      <paper-icon-button icon="delete" on-click="{{deleteSelected}}"></paper-icon-button>
+      <paper-icon-button icon="archive" on-click="{{archiveSelected}}"></paper-icon-button>
+      <!--
+      <core-field id="search">
+        <div class="icon"><core-icon icon="search"></core-icon></div>
+        <input placeholder="Search" on-focus={{highlight}} on-blur="{{lowlight}}" on-keypress="{{searchKites}}" flex>
+        <icon></icon>
+      </core-field>
+      -->
+    </core-toolbar>
+    <core-list id="siteList" data="{{data}}" multi="true">
+      <template>
+        <div class="row {{ {selected: selected} | tokenList }}" id="{{model.id}}">
+          <div class="col site-summary">
+            <div class="left"><paper-icon-button icon="star-outline" on-click="{{bookmark}}" data-kid={{model.id}}></paper-icon-button></div>
+            <div>
+              <span class="primary">{{model.from}}</span>
+              <span class="secondary right">
+                {{model.date}}
+                {{model.date}} ago
+              </span>
+            </div>
+            <div>
+              {{model.subject}}
+            </div>
+            <div class="teaser tertiary">
+              {{model.body}}&hellip;
+            </div>
+          </div>
+          <!--
+          <div class="col right">
+            <paper-icon-button icon="attachment" on-click="{{viewAttachments}}" data-kid="{{model.kite_id}}"></paper-icon-button>
+            <paper-icon-button icon="speaker-notes" on-click="{{viewComments}}" data-kid="{{model.kite_id}}"></paper-icon-button>
+          </div>
+          -->
+        </div>
+
+      </template>
+    </core-list>
+
+  </template>
+ 
+  <script>
+    Polymer('sites-element', {
+      data: [],
+      onSitesLoaded: function() {
+        console.log(this.responseText);
+      },
+      updateProgress: function(oEvent) {
+        if (oEvent.lengthComputable) {
+          var percentComplete = oEvent.loaded / oEvent.total;
+          document.querySelector('paper-progress').value = percentComplete;
+        } else {
+          // Unable to compute progress information since the total size is unknown
+        }
+      },
+      ready: function() {
+        
+        oReq = new XMLHttpRequest();
+        oReq.onload = this.onSitesLoaded;
+        oReq.onprogress = this.updateProgress;
+        oReq.open("get", "http://localhost:8081/admin/sites.json", true);
+        oReq.send();
+
+        //this.data.forEach(function(kite, idx, arr) {
+        //  index[kite.kite_id] = kite
+        //});
+
+        //this.dIndex = index;
+      },
+      highlight: function(event, detail, sender) {
+        this.$.search.classList.add('highlighted');
+      },
+      lowlight: function(event, detail, sender) {
+        this.$.search.classList.remove('highlighted');
+      },
+      getKiteFromIndex: function(kid) { return this.dIndex[kid]; },
+      currentKite: null,
+      getCurrentKite: function() { return this.currentKite; },
+      setCurrentKite: function(kite) { this.currentKite = kite; },
+      viewAttachments: function(event, detail, sender) {
+        alert("View Attachemtns");
+        // sender.getAttribute("data-kid");
+      },
+      viewComments: function(event, detail, sender) {
+        /*
+         * TODO: Fix kite id retrieval on "viewComments"
+         *
+         * The following feels so wrong. There should be a way
+         * to access the model or something else more clean.
+         * calling getAttribute() on the sender and repeatedly
+         * adding data-kid="{{}}" on objects does not seem correct.
+         */
+
+        var kiteId = sender.getAttribute("data-kid");
+        this.setCurrentKite(this.getKiteFromIndex(kiteId));
+      },
+      bookmark: function(event, detail, sender) {
+        /*
+        var kiteId = sender.getAttribute("data-kid");
+        this.setCurrentKite(this.getKiteFromIndex(kiteId));
+        this.$.kiteList.querySelector("div[id='" + kite_id + "']");
+        */
+        sender.classList.toggle('gold');
+
+        // Save kite to bookmarks group.
+      }
+    });
+  </script>
+</polymer-element>
