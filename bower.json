@@ -1,0 +1,25 @@
+{
+  "name": "iku-client-bootplate",
+  "version": "0.0.0",
+  "authors": [
+    "Christopher Rankin <crankin@amdirent.com>"
+  ],
+  "description": "Admin interface for iku framework",
+  "main": "index.js",
+  "keywords": [
+    "iku"
+  ],
+  "license": "MIT",
+  "homepage": "http://amdirent.github.io/iku",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#~0.5.5"
+  }
+}
